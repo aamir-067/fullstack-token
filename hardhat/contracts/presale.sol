@@ -2,15 +2,29 @@
 pragma solidity ^0.8.20;
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 // import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./IERC20CUSTOM.sol";
+interface IERC20CUSTOM{
+    /**
+     * @dev Addeed by the developer.
+     * This function returns the decimals of the token.
+     */
+    function decimals() external view returns (uint8);
+
+
+     /**
+     * @dev Addeed by the developer.
+     * This function mint new tokens.
+     */
+    function mint(address to,uint amount) external;
+}
+
 contract PreSale{
     // for fetching the eth price in usd.
     AggregatorV3Interface internal dataFeed;
 
     uint public totalSoldAmount;
     uint public currentRate = 0.00001 ether;
-    address mytoken;
-    address owner;
+    address public mytoken;
+    address public owner;
     event tokenSold( address indexed, uint indexed);
     event priceChange(uint);
     constructor(address _token){
@@ -21,11 +35,12 @@ contract PreSale{
             0x694AA1769357215DE4FAC081bf1f309aDC325306
         );
     }
-    function saleToken(uint tokens) public  payable{
+    
+    function purchaseTokens(uint tokens) public  payable{
         require(msg.value >= ((tokens / 1000) * currentRate), "not enough money to purchase tokens");  // 10 ** IERC20(mytoken).decimals() == 1000
         require((totalSoldAmount + (tokens / 1000) <= (80000000 * 1000)), "token already sold");    // 1000 == IERC20(mytoken).decimals()
 
-        if(!(totalSoldAmount + (tokens / 1000) <= (10000000 * 1000))){  // sold more then 10M token which means change price to mormal.
+        if(!(totalSoldAmount + tokens >= (10000000 * 1000))){  // sold more then 10M token which means change price to mormal.
             currentRate = 0.00005 ether;
         }
         totalSoldAmount += tokens;

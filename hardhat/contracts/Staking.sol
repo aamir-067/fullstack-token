@@ -1,7 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./IERC20CUSTOM.sol";
+interface IERC20CUSTOM{
+    /**
+     * @dev Addeed by the developer.
+     * This function returns the decimals of the token.
+     */
+    function decimals() external view returns (uint8);
+
+
+     /**
+     * @dev Addeed by the developer.
+     * This function mint new tokens.
+     */
+    function mint(address to, uint amount) external;
+}
+
 contract Stacking{
     struct Record{
         uint amount;
