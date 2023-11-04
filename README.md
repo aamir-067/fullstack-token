@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# MyToken DApp README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This repository contains the source code for a decentralized application (DApp) built using React. The DApp includes the creation of an ERC20 token called MyToken, a pre-sale mechanism, token purchase functionality, and a token stacking feature.
 
-## Available Scripts
+## Getting Started
+To get started with this DApp, follow these steps:
 
-In the project directory, you can run:
+1. Clone this repository to your local machine.
+2. Install the necessary dependencies using `npm install`.
+3. Make sure you have a development environment set up, such as Node.js and MetaMask.
+4. Configure your MetaMask wallet for the Sepolia Testnet.
 
-### `npm start`
+## Smart Contracts
+The DApp includes three smart contracts:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. MyToken.sol: The ERC20 token contract for MyToken.
+2. PreSale.sol: Manages the pre-sale of MyToken.
+3. Stacking.sol: Handles the token stacking and reward mechanism.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+### MyToken (ERC20 Token)
+- MyToken is an ERC20 token with the following features:
+  - Name: MyToken
+  - Symbol: MTK
+  - Decimals: 3
+  - Total Supply: Initially set to 10,000,000 tokens
+  - Owner Address: The owner address will receive the initial token supply.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Pre-sale
+- MyToken has a pre-sale mechanism with the following conditions:
+  - Pre-sale Price: 0.00001 ETH per token.
+  - When 10,000,000 tokens are sold in the pre-sale, the price increases to 0.00005 ETH per token.
+  
+### Stacking
+- Users can stack their MyToken to earn a 5% daily reward in additional tokens.
+- Once the total supply reaches 80,000,000 tokens, stacking is no longer allowed.
+  
+### Owner's Control
+- The owner of the contract can change the token's price at any time.
+  
+## Deployment
+- The DApp is initially deployed on the Sepolia Testnet.
+- After development, you can deploy the application to Netlify or the hosting service of your choice.
 
-### `npm run build`
+## Important Notes
+- This is a simplified example for demonstration purposes. Make sure to handle security and safety measures in a real-world application.
+- Ensure that you keep your private keys and contracts secure.
+- Test thoroughly before deploying to a live network.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## PRs
+If you have any suggestions or want to contribute to this project feel free to send me a pull request
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Happy coding ;)
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## `Status : project not completed yet`

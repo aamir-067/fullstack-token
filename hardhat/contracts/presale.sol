@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 // import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./IERC20CUSTOM.sol";
-contract presale{
+contract PreSale{
     // for fetching the eth price in usd.
     AggregatorV3Interface internal dataFeed;
 

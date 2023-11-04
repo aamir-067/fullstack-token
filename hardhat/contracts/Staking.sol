@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./IERC20CUSTOM.sol";
-contract stack{
+contract Stacking{
     struct Record{
         uint amount;
         uint time;
