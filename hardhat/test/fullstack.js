@@ -79,7 +79,6 @@ describe("AllTests",()=>{
 
         });
         
-        // ! ============== error in this ====================== 
         it("should able to purchase tokens and track totalSoldTokens", async ()=>{
             const totalBefore = await presale.totalSoldAmount();
             const bal = await mytoken.balanceOf(adr1.address);
@@ -105,8 +104,23 @@ describe("AllTests",()=>{
             expect(priceafter).to.equal(ethers.parseEther("0.00005"));
         });
 
-        it("should able to stop selling if supply is equals or greater then 80M", async () => {
+        it("should not change price if supplu is less then 10M", async () => {
+            const pricebefore = Number(ethers.formatEther(await presale.getTokenPriceInEth()));
+            await presale.purchaseTokens(50000 * 1000, {value: ethers.parseEther(`${pricebefore * 50000}`)});
 
+            const priceafter = Number(ethers.formatEther(await presale.getTokenPriceInEth()));
+
+            expect(priceafter).to.equal(pricebefore);
+        })
+
+        it("should able to stop selling if supply is equals or greater then 80M", async () => {
+            
+            for(let i=0 ; i < 8; i++){
+                const pricebefore = Number(ethers.formatEther(await presale.getTokenPriceInEth()));
+                await presale.purchaseTokens(10000000 * 1000, {value: ethers.parseEther(`${pricebefore * 10000000}`)});
+            }
+            const pricebefore = Number(ethers.formatEther(await presale.getTokenPriceInEth()));
+            await expect(presale.purchaseTokens(50 * 1000, {value: ethers.parseEther(`${pricebefore * 50}`)})).to.be.revertedWith("token already sold");
         });
 
         it("should able to change token price manually", async () => {
@@ -119,5 +133,117 @@ describe("AllTests",()=>{
             expect(pricebefore).not.equal(priceafter);
             expect(ethers.toNumber(priceafter)).to.equal(newPrice);
         });
+
+        it("should emit events on token purchase and the priceChange", async ()=>{
+            var p;
+            presale.on("priceChange", res => {
+                p = ether.formatEther(res);
+                expect(priceChange).to.equal("0.0001");
+                console.log("p ==> " + p);
+            })
+
+            let purchaseRes = ["", 0];
+            presale.on("tokenSold", (adr, amount)=>{
+                purchaseRes[0] = adr;
+                purchaseRes[1] = ethers.toNumber(amount);
+                expect(purchaseRes[0]).to.equal(adr1.address);
+                expect(purchaseRes[1]).to.equal(500);
+
+                console.log("details of token sold", purchaseRes);
+            })
+
+            const pricebefore = Number(ethers.formatEther(await presale.getTokenPriceInEth()));
+            await presale.connect(adr1).purchaseTokens(500 * 1000, {value: ethers.parseEther(`${pricebefore * 500}`)});
+
+            const newPrice = ethers.parseEther("0.0001");
+            await presale.changePrice(newPrice);
+
+            
+        });
     });
+
+    describe("stacking", ()=>{
+        it("should able to stack tokens and fail if tokens are less then 50", async ()=>{
+            await mytoken.approve(stacking.target, 100 * 1000);
+            await stacking.stackToken(100 * 1000);
+
+            const result = await stacking.stackers(owner.address);
+
+            expect(result[0]).to.equal(100000n);
+            expect(ethers.toNumber(result[1])).greaterThan(0);
+        });
+
+        it("should able to save record and update data on next stack",async () =>{
+            await mytoken.approve(stacking.target, 100 * 1000);
+            await stacking.stackToken(100 * 1000);
+
+            const result = await stacking.stackers(owner.address);
+
+            await mytoken.approve(stacking.target, 100 * 1000);
+            await stacking.stackToken(100 * 1000);
+            const result2 = await stacking.stackers(owner.address);
+
+            expect(result2[0]).to.equal(result[0] + 100000n);
+            expect(result2[1]).greaterThan(result[1]);
+
+        });
+
+        it("should able to unstack tokens with the reword and maintain reword", async ()=>{
+            const pricebefore = Number(ethers.formatEther(await presale.getTokenPriceInEth()));
+            await presale.connect(adr1).purchaseTokens(200000n, {value: ethers.parseEther(`${pricebefore * 200}`)});
+
+            await mytoken.connect(adr1).approve(stacking.target, 100 * 1000);
+            await stacking.connect(adr1).stackToken(100 * 1000);
+
+
+            await mytoken.connect(adr1).approve(stacking.target, 100 * 1000);
+            await stacking.connect(adr1).stackToken(100 * 1000);
+
+            const result = await stacking.stackers(adr1.address);
+            await stacking.connect(adr1).unStackToken(50 * 1000);
+            const result2 = await stacking.stackers(adr1.address);
+
+            const adr1Bal = await mytoken.balanceOf(adr1.address);
+
+
+            expect(adr1Bal).greaterThanOrEqual(50000n);
+            expect(result[0]).to.equal(result2[0] + 50000n);
+            expect(result[1]).lessThanOrEqual(result2[1]);
+
+            
+
+        });
+
+        it("should not stack tokens if supply raech 80M", async ()=>{
+            const pricebefore = Number(ethers.formatEther(await presale.getTokenPriceInEth()));
+            await presale.connect(adr1).purchaseTokens(8000005000, {value: ethers.parseEther(`${pricebefore * 8000005}`)});
+            
+            await mytoken.approve(stacking.target, 5000000);
+            const res = await stacking.stackToken(5000000);
+
+            expect(res).to.revertedWith("Stacking: max supply reached cant stack anymore");
+
+        });
+
+        it("should emit event on stack and unstack of the token", async ()=>{
+            const val = 100;
+            stacking.on("tokenStacked", res =>{
+                expect(ethers.toNumber(res)).to.equal(val)
+            })
+            await mytoken.approve(stacking.target, val * 1000);
+            await stacking.stackToken(val * 1000);
+
+            // for unstack
+
+            stacking.on("tokenUnStacked", (value , reward)=>{
+                expect(ethers.toNumber(value)).to.equal(val);
+                expect(ethers.toNumber(reward)).to.be.not.null();
+            })
+
+            await stacking.unStackToken(val * 1000);
+
+            
+
+        });
+    })
 })

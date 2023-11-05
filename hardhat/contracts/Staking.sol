@@ -1,20 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-interface IERC20CUSTOM{
-    /**
-     * @dev Addeed by the developer.
-     * This function returns the decimals of the token.
-     */
-    function decimals() external view returns (uint8);
-
-
-     /**
-     * @dev Addeed by the developer.
-     * This function mint new tokens.
-     */
-    function mint(address to, uint amount) external;
-}
+import "./IERC20CUSTOM.sol";
 
 contract Stacking{
     struct Record{
@@ -28,6 +15,8 @@ contract Stacking{
 
     mapping (address => Record) public stackers;
     address mytoken;
+
+    
     event tokenStacked(uint);
     event tokenUnStacked(uint, uint);
 
@@ -53,7 +42,7 @@ contract Stacking{
         emit tokenStacked(amount);
     }
 
-    function unStackToken(uint amount) public{
+    function unStackToken(uint amount) public{  
         require(amount >= 0, "tokens must be greater than 0");
         Record storage temp = stackers[msg.sender];
         require(temp.amount >= amount, "you dont have enough token to unstack");
