@@ -30,7 +30,7 @@ function Stack() {
                                         type="number"
                                         placeholder="tokens amount"
                                     />
-                                    <p className='ml-4 text-gray-700 text-sm'>* minimum 50 tokens allowed</p>
+                                    <p className=' text-gray-700 text-sm'>* minimum 50 tokens allowed</p>
                                 </div>
                             </div>
 
@@ -44,8 +44,6 @@ function Stack() {
                             </div>
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </section>

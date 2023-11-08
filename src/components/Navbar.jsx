@@ -1,23 +1,21 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-// import { initWeb3 } from '../utils'
-// import {useSelector, useDispatch} from "react-redux";
-// import { web3Reset } from '../features';
+import {initByProvider, initBySigner} from "../utils";
+import {useSelector, useDispatch} from "react-redux";
 const Navbar = () => {
-  // const {signer} = useSelector((state) => state.web3Api);
-  // const {web3Api} = useSelector((state) => state);
+  const {signer} = useSelector((state) => state.web3Api);
 
-  // console.log(web3Api);
+  console.log(signer);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const handleConnect = async ()=>{
-  //   if(!signer){
-  //     await initWeb3();
-  //   }else{
-  //     dispatch(web3Reset({signer : null, provider : null, bank : null, mycoin : null, reword : null}));
-  //   }
-// }
+  const handleConnect = async ()=>{
+    if(!signer){
+      await initBySigner();
+    }else{
+      await initByProvider();
+    }
+}
 
 const paths = [
   {path : "" , text : "Home"},
@@ -38,7 +36,7 @@ return (
         <span className="font-bold">DeBank</span>
       </NavLink>
 
-      <div className="lg:block">
+      <div className="lg:block hidden">
         <ul className="inline-flex space-x-8">
 
 
@@ -56,20 +54,19 @@ return (
         </ul>
       </div>
 
-      <div className=" lg:block">
+      <div className=" lg:block flex gap-3">
         <div className=' flex justify-between items-center gap-3'>
           <button
-            onClick={async () => { /*await handleConnect()*/ }}
+            onClick={async () => { await handleConnect() }}
             type="button"
-            className={`rounded-md order-2 border-2 border-black  ${{/*${signer?.address ? "text-black bg-white" : "bg-black text-white"} */}} px-3 py-2 text-sm font-semibold shadow-sm hover:bg-black hover:text-white ease-in-out duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black`}
+            className={`rounded-md order-2 border-2 border-black  ${`${signer ? "text-black bg-white" : "bg-black text-white"}`} px-2 py-1 text-sm font-semibold shadow-sm hover:bg-black hover:text-white ease-in-out duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black`}
           >
-            {/*signer?.address ? "Log out" : "connect wallet" */} test
+            {signer ? "Log out" : "connect wallet"} 
           </button>
-          <p className='order-1 text-sm font-sans font-bold'>{/*signer?.address ? `${[...signer.address].slice(0, 5).join("")}...${[...signer.address].slice(37, 42).join("")}` : "" */}</p>
+          <p className='order-1 text-sm font-sans font-bold hidden lg:block'>{signer ? `${[...signer.address].slice(0, 5).join("")}...${[...signer.address].slice(37, 42).join("")}` : "" }</p>
         </div>
-      </div>
 
-      <div className="lg:hidden">
+        <button className="lg:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -86,7 +83,10 @@ return (
           <line x1="4" y1="6" x2="20" y2="6"></line>
           <line x1="4" y1="18" x2="20" y2="18"></line>
         </svg>
+      </button>
       </div>
+
+      
     </div>
   </div>
 
