@@ -1,6 +1,7 @@
 import React from 'react'
-
+import { useSelector } from 'react-redux';
 const Purchase = () => {
+    const {tokensDetails} = useSelector(state => state);
     return (
         <section>
             <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -19,7 +20,7 @@ const Purchase = () => {
 
                     <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
                     <h2 className='font-bold text-lg'>Pre Sale Status : </h2>
-                    <h2 className='font-bold text-lg'>Undefined</h2>
+                    <h2 className='font-bold text-lg'>{tokensDetails.preSaleStatus}</h2>
                     </div>
 
                     <form onSubmit={(e) => { }} className="mt-8">
@@ -51,11 +52,11 @@ const Purchase = () => {
 
                     <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
                     <h2 className='font-bold text-lg'>Price in Eth : </h2>
-                    <h2 className='font-bold text-lg'>0.002 eth</h2>
+                    <h2 className='font-bold text-lg'>{tokensDetails.tokenPrice.eth} eth</h2>
                     </div>
                     <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
                     <h2 className='font-bold text-lg'>Price in USD : </h2>
-                    <h2 className='font-bold text-lg'>$0.3</h2>
+                    <h2 className='font-bold text-lg'>${tokensDetails.tokenPrice.usd}</h2>
                     </div>
                 </div>
             </div>

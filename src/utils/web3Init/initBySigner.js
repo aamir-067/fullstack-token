@@ -14,10 +14,10 @@ export const initBySigner = async () => {
 
             // listen to wallet events
             window.ethereum.on('chainChanged', async () => {
-                await initBySigner()
+                await initBySigner();
             });
             window.ethereum.on('accountsChanged', async () => {
-                await initBySigner()
+                await initBySigner();
             });
 
             // store the web3Api

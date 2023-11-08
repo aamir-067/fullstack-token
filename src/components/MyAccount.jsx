@@ -1,7 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const MyAccount = () => {
+	const {peerDetails} = useSelector(state => state);
 	return (
 		<div className='flex justify-center mt-20 h-5/6 mb-40'>
 			<div className='w-11/12 md:w-8/12 my-6'>
@@ -9,15 +11,16 @@ const MyAccount = () => {
 				<div className='my-4 md:my-6'>
 				<div className='flex md:flex-row flex-col justify-evenly items-center'>
 					<h2 className='font-bold text-lg'>Account Address</h2>
-					<p>0x000000000000000</p>
+					<p>{peerDetails.address}
+					</p>
 				</div>
 				<div className='flex md:flex-row flex-col justify-evenly items-center'>
 					<h2 className='font-bold text-lg'>Tokens Stacked</h2>
-					<p>67876</p>
+					<p>{peerDetails.tokenStacked} MTK</p>
 				</div>
 				<div className='flex md:flex-row flex-col justify-evenly items-center'>
-					<h2 className='font-bold text-lg'>Tokens Available</h2>
-					<p>786</p>
+					<h2 className='font-bold text-lg'>Tokens in wallet</h2>
+					<p>{peerDetails.tokensInWallet} MTK</p>
 				</div>
 				</div>
 				

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLoaderData } from 'react-router-dom'
 // import { fetchTotalTokens } from '../utils';
+import {useSelector} from "react-redux";
 
 const Home = () => {
-  // const tokensCount = useLoaderData();  // i used loader to fetch the totalStacked Tokens
+  const {tokensSold} = useSelector(state => state.tokensDetails);
 
   return (
     <div className="relative w-full bg-white">
@@ -21,7 +22,7 @@ const Home = () => {
           <p className="mt-8 text-lg text-gray-700">
             Purchase MyToken right now and stack your tokens to earn a daily reward at <strong>5% daily</strong> of the total tokens stacked in the Bank
           </p>
-          <h2 className='my-4 font-bold text-lg'>MyToken Supply : {66}</h2>
+          <h2 className='my-4 font-bold text-lg'>MyToken Sold : {tokensSold ? tokensSold : 0}</h2>
           <div className='my-6'>
               <NavLink
                 to={"/purchase"}

@@ -1,10 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    tokenPrice : {eth : null, usd : null},
-    tokenSupply : null,
-    tokensSold : null,
-    preSaleStatus : null,
+    tokenPrice : {eth : "null", usd : "null"},
+    tokenSupply : "null",
+    tokensSold : "null",
+    preSaleStatus : "undefined",
 }
 
 const tokensDetail = createSlice({
