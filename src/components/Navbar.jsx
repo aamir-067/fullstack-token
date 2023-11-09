@@ -1,13 +1,11 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import {initByProvider, initBySigner} from "../utils";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 const Navbar = () => {
   const {signer} = useSelector((state) => state.web3Api);
 
   console.log(signer);
-
-  const dispatch = useDispatch();
 
   const handleConnect = async ()=>{
     if(!signer){
@@ -40,8 +38,8 @@ return (
         <ul className="inline-flex space-x-8">
 
 
-          {paths.map(item=>{
-            return <li>
+          {paths.map((item , id)=>{
+            return <li key={id}>
             <NavLink
               to={item.path}
               className={({ isActive }) => `text-sm font-semibold  ${isActive ? "text-blue-700" : "text-gray-800"} hover:text-blue-900`}
@@ -61,7 +59,7 @@ return (
             type="button"
             className={`rounded-md order-2 border-2 border-black  ${`${signer ? "text-black bg-white" : "bg-black text-white"}`} px-2 py-1 text-sm font-semibold shadow-sm hover:bg-black hover:text-white ease-in-out duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black`}
           >
-            {signer ? "Log out" : "connect wallet"} 
+            {signer ? "Log out" : "connect wallet"}
           </button>
           <p className='order-1 text-sm font-sans font-bold hidden lg:block'>{signer ? `${[...signer.address].slice(0, 5).join("")}...${[...signer.address].slice(37, 42).join("")}` : "" }</p>
         </div>
@@ -74,9 +72,9 @@ return (
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="h-6 w-6 cursor-pointer"
         >
           <line x1="4" y1="12" x2="20" y2="12"></line>

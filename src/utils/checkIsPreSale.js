@@ -8,11 +8,13 @@ export const checkIsPreSale = async () => {
             // if  supply < 10M means presale started
             // if supply < 10M and >80M the presale is ended
             // if supply is greater the 80M then you can't purcahse or stack tokens anymore.
-            const res = ethers.toNumber(await web3Api.presale.totalSoldAmount()) / 1000; // so that the decimals are deducted.
+            let res =await web3Api.presale.totalSoldAmount() ; // so that the decimals are deducted.
+            res = ethers.toNumber(res) / 1000;
+            console.log(res);
             let status;
             if (res < 10000000) {
                 status =  "Started";
-            } else if (res > 10000000 && res < 80000000) {
+            } else if (res >= 10000000 && res <= 80000000) {
                 status = "Ended";
             }
             else {

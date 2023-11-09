@@ -1,16 +1,18 @@
 import { ethers } from "ethers";
 import { store } from "../app/store";
 import { setTokenDetails } from "../features";
-export const checkTokenSupply = async () => {
+export const checkTokenSupply = async () => { 
     try {
         const { web3Api, tokensDetails } = store.getState();
         if (web3Api.provider || web3Api.signer) {
-            const res = ethers.toNumber(await web3Api.mytoken.totalSoldAmount()) / 1000; // so that the decimals are deducted.
+            const res = await web3Api.mytoken.totalSupply(); 
             
             store.dispatch(setTokenDetails({
                 ...tokensDetails,
-                tokenSupply : res,
+                tokenSupply : ethers.toNumber(res),
             }))
+        
+            console.log("supply response is  : ", ethers.toNumber(res));
 
 
 

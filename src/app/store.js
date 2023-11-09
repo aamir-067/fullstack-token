@@ -6,5 +6,9 @@ export const store = configureStore({
         web3Api : web3Reducer,
         tokensDetails : tokenDetailsReducer,
         peerDetails : peerDetailsReducer
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+        serializableCheck: false,
+    })
 });

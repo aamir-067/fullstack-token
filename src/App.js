@@ -10,7 +10,7 @@ function App() {
 			await checkIsPreSale();
 			await checkTokenSupply();
 		}
-		// initWeb3();
+		initWeb3();
 	}, []);
 
 

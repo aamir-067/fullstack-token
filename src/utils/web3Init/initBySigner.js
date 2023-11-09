@@ -24,7 +24,7 @@ export const initBySigner = async () => {
             store.dispatch(initWeb3({mytoken, presale, stacking, provider, signer}));
 
         }else{
-            console.log("please connect wallet first");
+            console.log("please install wallet first");
         }
     } catch (e) {
         console.error(e);

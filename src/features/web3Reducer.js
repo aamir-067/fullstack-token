@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
      mytoken: null,
@@ -7,17 +7,6 @@ const initialState = {
      provider: null,
      signer: null 
 }
-
-export const setupWeb3 = createAsyncThunk('web3Api/setupWeb3', async (web3Payload, thunkAPI) => {
-    // your async calls here
-    return {
-        mytoken: web3Payload.mytoken,
-        presale: web3Payload.presale,
-        stacking: web3Payload.stacking,
-        provider: web3Payload.provider,
-        signer: web3Payload.signer,
-    };
-});
 
 const web3Api = createSlice({
     name: 'web3Api',
@@ -30,16 +19,7 @@ const web3Api = createSlice({
             state.signer = action.payload.signer;
             state.provider = action.payload.provider;
         }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(setupWeb3.fulfilled, (state, action) => {
-            state.mytoken = action.payload.mytoken;
-            state.presale = action.payload.presale;
-            state.stacking = action.payload.stacking;
-            state.signer = action.payload.signer;
-            state.provider = action.payload.provider;
-        });
-    },
+    }
 })
 export const { initWeb3 } = web3Api.actions;
 export default web3Api.reducer;

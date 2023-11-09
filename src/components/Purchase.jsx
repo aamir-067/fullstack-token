@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
+import { getPriceInUSD } from '../utils';
 const Purchase = () => {
     const {tokensDetails} = useSelector(state => state);
+
+    useEffect(()=>{
+        // getPriceInEth();
+        ;(async()=>{
+            if(!tokensDetails.tokenPrice.eth){
+                await getPriceInUSD()
+            }
+        }
+        )()
+    },[]);
     return (
         <section>
             <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -52,11 +63,11 @@ const Purchase = () => {
 
                     <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
                     <h2 className='font-bold text-lg'>Price in Eth : </h2>
-                    <h2 className='font-bold text-lg'>{tokensDetails.tokenPrice.eth} eth</h2>
+                    <h2 className='font-bold text-lg'>{tokensDetails.tokenPrice.eth ? `${tokensDetails.tokenPrice.eth} eth` : "loading..."}</h2>
                     </div>
                     <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
                     <h2 className='font-bold text-lg'>Price in USD : </h2>
-                    <h2 className='font-bold text-lg'>${tokensDetails.tokenPrice.usd}</h2>
+                    <h2 className='font-bold text-lg'>{tokensDetails.tokenPrice.usd ?  `$ ${Number(tokensDetails.tokenPrice.usd).toFixed(4)}` : "loading..."}</h2>
                     </div>
                 </div>
             </div>
