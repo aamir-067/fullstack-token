@@ -1,17 +1,19 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import {initByProvider, initBySigner} from "../utils";
-import {useSelector} from "react-redux";
+import {initByProvider, initBySigner, checkAccountDetails} from "../utils";
+import {useDispatch, useSelector} from "react-redux";
+import { resetPeerDetails } from '../features';
 const Navbar = () => {
   const {signer} = useSelector((state) => state.web3Api);
-
-  console.log(signer);
-
+  const dispatch = useDispatch();
   const handleConnect = async ()=>{
+
     if(!signer){
       await initBySigner();
+      await checkAccountDetails();
     }else{
       await initByProvider();
+      dispatch(resetPeerDetails());
     }
 }
 

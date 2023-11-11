@@ -13,10 +13,10 @@ export const purchaseTokens = async ({amount}) => {
             const tokenPrice = await getPriceInEth();
             const res = await web3Api.presale.purchaseTokens(amount * 1000 , {value : ethers.parseEther(`${amount * tokenPrice}`)});
             
-            console.log("Token purcahse in progress ... ");
             await res.wait();
 
             console.log("Tokens purcahsed successfully");
+            return true;
 
         }else{
             console.log("please connect wallet first");

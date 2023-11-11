@@ -1,6 +1,8 @@
 import React from 'react'
-
+import { useSelector } from 'react-redux';
 const UnStack = () => {
+
+    const {peerDetails} = useSelector(state => state);
     return (
         <section>
             <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -16,6 +18,14 @@ const UnStack = () => {
                     <p className="mt-2 text-center text-sm text-gray-600 ">
                         reword tokens will automatically transfer to your account
                     </p>
+
+                    <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
+                    <h2 className='font-bold text-lg'>Stacked tokens : </h2>
+                    <h2 className='font-bold text-lg'>
+                        {peerDetails.tokenStacked === "please wait..."? "connect wallet" : peerDetails.tokenStacked}
+                        </h2>
+                    </div>
+
                     <form onSubmit={(e) => { }} className="mt-8">
                         <div className="space-y-5">
                             <div>

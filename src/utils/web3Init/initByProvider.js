@@ -3,6 +3,7 @@ import {MyToken, Stacking, PreSale} from "../../artifacts/index"
 import { MYTOKEN_ADDRESS, PRESALE_ADDRESS, STACKING_ADDRESS } from "../../constants";
 import { initWeb3 } from "../../features";
 import {store} from "../../app/store"
+import { checkAccountDetails } from "../checkAccountDetails";
 export const initByProvider = async ()=>{
     try {
         if (window.ethereum) {
@@ -13,10 +14,12 @@ export const initByProvider = async ()=>{
 
             // listen to wallet events
             window.ethereum.on('chainChanged', async () => {
-                await initByProvider()
+                await initByProvider();
+                await checkAccountDetails();
             });
             window.ethereum.on('accountsChanged', async () => {
-                await initByProvider()
+                await initByProvider();
+                await checkAccountDetails();
             });
 
             // store the web3Api

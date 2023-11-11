@@ -1,4 +1,4 @@
-import PeerDetailsReducer ,{ setPeerDetails } from "./PeerDetailsReducer";
+import PeerDetailsReducer ,{ setPeerDetails, resetPeerDetails } from "./PeerDetailsReducer";
 import tokenDetailsReducer, { setTokenDetails } from "./tokenDetailsReducer";
 import web3Reducer, { initWeb3 } from "./web3Reducer";
 export {
@@ -7,5 +7,6 @@ export {
     tokenDetailsReducer,
     setTokenDetails,
     PeerDetailsReducer as peerDetailsReducer,
-    setPeerDetails
+    setPeerDetails,
+    resetPeerDetails
 };

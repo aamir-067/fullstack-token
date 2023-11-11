@@ -5,4 +5,7 @@ import { getPriceInUSD } from "./fetchPrice/priceInUSD";
 import { checkIsPreSale } from "./checkIsPreSale";
 import { purchaseTokens } from "./purchaseTokens";
 import { checkTokenSupply } from "./checkTokensSupply";
-export {initByProvider, initBySigner, getPriceInEth,checkTokenSupply, getPriceInUSD, checkIsPreSale , purchaseTokens}; 
+import { checkAccountDetails } from "./checkAccountDetails";
+
+export {initByProvider, initBySigner, getPriceInEth,checkTokenSupply, 
+    checkAccountDetails,getPriceInUSD, checkIsPreSale , purchaseTokens}; 

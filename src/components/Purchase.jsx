@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
-import { getPriceInUSD } from '../utils';
+import { checkAccountDetails, getPriceInUSD, purchaseTokens } from '../utils';
 const Purchase = () => {
+
+    const price = useRef(null);
     const {tokensDetails} = useSelector(state => state);
 
     useEffect(()=>{
-        // getPriceInEth();
         ;(async()=>{
             if(!tokensDetails.tokenPrice.eth){
                 await getPriceInUSD()
@@ -13,6 +14,20 @@ const Purchase = () => {
         }
         )()
     },[]);
+
+    const handlePurchase = async (e) => {
+        e?.preventDefault();
+        const amount = price.current.value;
+        if((amount > 50) && (amount < 10000000) ) {
+            const res = await purchaseTokens({amount});
+            await checkAccountDetails();
+            if(res){
+                console.log("done purchasing");
+            }
+        }else{
+            console.log("invalid amount entered retry with correct number");
+        }
+    }
     return (
         <section>
             <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -34,7 +49,7 @@ const Purchase = () => {
                     <h2 className='font-bold text-lg'>{tokensDetails.preSaleStatus}</h2>
                     </div>
 
-                    <form onSubmit={(e) => { }} className="mt-8">
+                    <form onSubmit={async(e) => { handlePurchase(e) }} className="mt-8">
                         <div className="space-y-5">
                             <div>
                                 <label htmlFor="" className="text-base font-medium text-gray-900">
@@ -42,6 +57,7 @@ const Purchase = () => {
                                 </label>
                                 <div className="mt-2">
                                     <input
+                                        ref={price}
                                         className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                         type="number"
                                         placeholder="tokens amount"
@@ -52,10 +68,11 @@ const Purchase = () => {
 
                             <div>
                                 <button
+                                    onClick={()=>{handlePurchase(undefined)}}
                                     type="button"
                                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                 >
-                                    Stack Tokens
+                                    Purchase Tokens
                                 </button>
                             </div>
                         </div>

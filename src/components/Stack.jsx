@@ -1,6 +1,10 @@
 import React, { useRef } from 'react'
+import { useSelector } from 'react-redux';
 function Stack() {
     const tokensCount = useRef();
+
+
+    const {peerDetails} = useSelector(state => state);
 
     return (
         <section>
@@ -17,6 +21,14 @@ function Stack() {
                     <p className="mt-2 text-center text-sm text-gray-600 ">
                         Stack and earn 5% daily RWD Tokens
                     </p>
+
+                    <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
+                    <h2 className='font-bold text-lg'>Tokens in Wallet : </h2>
+                    <h2 className='font-bold text-lg'>
+                        {peerDetails.tokensInWallet === "please wait..."? "connect wallet" : peerDetails.tokensInWallet}
+                        </h2>
+                    </div>
+
                     <form onSubmit={(e) => { }} className="mt-8">
                         <div className="space-y-5">
                             <div>
