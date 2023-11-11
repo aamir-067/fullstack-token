@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useSelector } from 'react-redux';
+import { unstackTokens , checkAccountDetails} from '../utils';
 const UnStack = () => {
+    const tokenRef = useRef(null);
+    const peerDetails = useSelector(state => state.peerDetails);
 
-    const {peerDetails} = useSelector(state => state);
+    const handleUnstack = async (e) => {
+        e?.preventDefault();
+        const amount = Number(tokenRef.current.value) || 0;
+        if(typeof peerDetails.tokenStacked === "number" && peerDetails.tokenStacked >= amount && amount > 0) {
+            const res = await unstackTokens({amount});
+            await checkAccountDetails();
+
+            if(res){
+                console.log("Unstacked done with reward");
+            }
+        }else{ 
+            console.log("Please enter a valid number.");
+        }
+
+
+    }
+
     return (
         <section>
             <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -20,13 +39,13 @@ const UnStack = () => {
                     </p>
 
                     <div className='flex flex-col lg:flex-row justify-center gap-x-4 items-center mt-4'>
-                    <h2 className='font-bold text-lg'>Stacked tokens : </h2>
-                    <h2 className='font-bold text-lg'>
-                        {peerDetails.tokenStacked === "please wait..."? "connect wallet" : peerDetails.tokenStacked}
+                        <h2 className='font-bold text-lg'>Stacked tokens : </h2>
+                        <h2 className='font-bold text-lg'>
+                            {peerDetails.tokenStacked === "please wait..." ? "connect wallet" : peerDetails.tokenStacked}
                         </h2>
                     </div>
 
-                    <form onSubmit={(e) => { }} className="mt-8">
+                    <form onSubmit={(e) => {handleUnstack(e) }} className="mt-8">
                         <div className="space-y-5">
                             <div>
                                 <label htmlFor="" className="text-base font-medium text-gray-900">
@@ -34,20 +53,21 @@ const UnStack = () => {
                                 </label>
                                 <div className="mt-2">
                                     <input
+                                        ref={tokenRef}
                                         className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                         type="number"
                                         placeholder="tokens amount"
                                     />
-                                    
                                 </div>
                             </div>
 
                             <div>
                                 <button
+                                onClick={()=>handleUnstack(undefined)}
                                     type="button"
                                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                 >
-                                    Stack Tokens
+                                    UnStack
                                 </button>
                             </div>
                         </div>

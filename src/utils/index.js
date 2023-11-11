@@ -6,6 +6,10 @@ import { checkIsPreSale } from "./checkIsPreSale";
 import { purchaseTokens } from "./purchaseTokens";
 import { checkTokenSupply } from "./checkTokensSupply";
 import { checkAccountDetails } from "./checkAccountDetails";
+import { stackTokens } from "./stackTokens";
+import { unstackTokens } from "./unstackTokens";
+import { transferTokens } from "./transferTokens";
 
-export {initByProvider, initBySigner, getPriceInEth,checkTokenSupply, 
+export {initByProvider, initBySigner,stackTokens , unstackTokens,
+    getPriceInEth,checkTokenSupply, transferTokens,
     checkAccountDetails,getPriceInUSD, checkIsPreSale , purchaseTokens}; 

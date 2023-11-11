@@ -9,11 +9,9 @@ export const checkTokenSupply = async () => {
             
             store.dispatch(setTokenDetails({
                 ...tokensDetails,
-                tokenSupply : ethers.toNumber(res),
+                tokenSupply : ethers.toNumber(res) / 1000,
             }))
         
-            console.log("supply response is  : ", ethers.toNumber(res));
-
 
 
         }else{

@@ -1,10 +1,25 @@
 import React, { useRef } from 'react'
 import { useSelector } from 'react-redux';
+import { stackTokens , checkAccountDetails} from '../utils';
 function Stack() {
-    const tokensCount = useRef();
+    const tokensCount = useRef(); 
 
 
-    const {peerDetails} = useSelector(state => state);
+    const peerDetails = useSelector(state => state.peerDetails);
+
+    const handleStack = async (e) => {
+        e?.preventDefault();
+        const amount = tokensCount.current.value;
+        if(amount >= 50) {
+            const res = await stackTokens({amount});
+            await checkAccountDetails();
+            if(res){
+                console.log("done stacking");
+            }
+        }else{
+            console.log("invalid amount entered retry with correct number");
+        }
+    }
 
     return (
         <section>
@@ -29,7 +44,7 @@ function Stack() {
                         </h2>
                     </div>
 
-                    <form onSubmit={(e) => { }} className="mt-8">
+                    <form onSubmit={async(e) => { await handleStack(e) }} className="mt-8">
                         <div className="space-y-5">
                             <div>
                                 <label htmlFor="" className="text-base font-medium text-gray-900">
@@ -48,6 +63,7 @@ function Stack() {
 
                             <div>
                                 <button
+                                onClick={async ()=>{ await handleStack(undefined)}}
                                     type="button"
                                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                 >

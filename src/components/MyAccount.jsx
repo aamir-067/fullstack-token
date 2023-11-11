@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 const MyAccount = () => {
 
-	const {peerDetails} = useSelector(state => state); 
+	const peerDetails = useSelector(state => state.peerDetails); 
 	return (
 		<div className='flex justify-center mt-20 h-5/6 mb-40'>
 			<div className='w-11/12 md:w-8/12 my-6'>

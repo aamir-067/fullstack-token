@@ -4,7 +4,7 @@ import { checkAccountDetails, getPriceInUSD, purchaseTokens } from '../utils';
 const Purchase = () => {
 
     const price = useRef(null);
-    const {tokensDetails} = useSelector(state => state);
+    const tokensDetails = useSelector(state => state.tokensDetails); 
 
     useEffect(()=>{
         ;(async()=>{
