@@ -4,6 +4,16 @@ import { useSelector } from 'react-redux'
 
 const MyAccount = () => {
 
+	function formatTimestamp(unixTimestamp) {
+		const date = new Date(unixTimestamp * 1000);
+		const hours = ('0' + date.getHours()).slice(-2);
+		const minutes = ('0' + date.getMinutes()).slice(-2);
+		const day = ('0' + date.getDate()).slice(-2);
+		const month = ('0' + (date.getMonth() + 1)).slice(-2);
+		const year = date.getFullYear();
+		return `${hours}:${minutes} ${day}/${month}/${year}`;
+	}
+
 	const peerDetails = useSelector(state => state.peerDetails); 
 	return (
 		<div className='flex justify-center mt-20 h-5/6 mb-40'>
@@ -21,7 +31,7 @@ const MyAccount = () => {
 				</div>
 				<div className='flex md:flex-row flex-col justify-evenly items-center'>
 					<h2 className='font-bold text-lg'>Stacking Time</h2>
-					<p>{peerDetails.tokenStacked !== "0 MTK" ? peerDetails.stackingTime: "Not Stacked Yet"}</p>
+					<p>{peerDetails.tokenStacked !== "0 MTK" ? formatTimestamp(Number(peerDetails.stackingTime)): "Not Stacked Yet"}</p>
 				</div>
 				<div className='flex md:flex-row flex-col justify-evenly items-center'>
 					<h2 className='font-bold text-lg'>Tokens in wallet</h2>

@@ -4,10 +4,10 @@ export const unstackTokens = async ({amount}) => {
         const { web3Api } = store.getState();
         if (web3Api.signer){
 
-            await web3Api.stacking.unStackToken(amount * 1000);
+            const res = await web3Api.stacking.unStackToken(amount * 1000);
 
             // console.log("Tokens unStacked successfully");
-            return true;
+            return res;
 
         }else{
             console.log("please connect wallet first");

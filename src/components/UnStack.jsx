@@ -8,12 +8,16 @@ const UnStack = () => {
     const handleUnstack = async (e) => {
         e?.preventDefault();
         const amount = Number(tokenRef.current.value) || 0;
-        if(typeof peerDetails.tokenStacked === "number" && peerDetails.tokenStacked >= amount && amount > 0) {
+        const tokenStacked = Number(peerDetails.tokenStacked.split(" ")[0])
+        console.log(tokenStacked, amount);
+        if(tokenStacked >= amount && amount > 0) {
             const res = await unstackTokens({amount});
-            await checkAccountDetails();
-
+            
+            tokenRef.current.value = "";
             if(res){
                 console.log("Unstacked done with reward");
+                await res.wait();
+                await checkAccountDetails();
             }
         }else{ 
             console.log("Please enter a valid number.");

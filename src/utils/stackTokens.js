@@ -9,11 +9,11 @@ export const stackTokens = async ({amount}) => {
             }
             
             const res = await web3Api.mytoken.approve(web3Api.stacking.target, amount * 1000);
-            await res.wait();
-            await web3Api.stacking.stackToken(amount * 1000);
+            // await res.wait();
+            const res2 = await web3Api.stacking.stackToken(amount * 1000);
 
             console.log("Tokens stacked successfully");
-            return true;
+            return res2;
 
         }else{
             console.log("please connect wallet first");

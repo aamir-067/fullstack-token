@@ -33,7 +33,7 @@ return (
         <span className='overflow-hidden w-10'>
           <img src="https://img.freepik.com/free-vector/flat-design-crypto-mining-logo-template_23-2149409054.jpg?t=st=1698559799~exp=1698560399~hmac=02efc8967937811259bbfea12251e2ebe0e0d7762de1bfd029b10bf6577ef238" alt="this application logo" />
         </span>
-        <span className="font-bold">DeBank</span>
+        <span className="font-bold hidden md:block">MyToken</span>
       </NavLink>
 
       <div className="lg:block hidden">
